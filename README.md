@@ -41,6 +41,7 @@ $ npm run test:cov
 - For specific help : nest generate –help
 - For create project in dry mode : nest new nestjs-intro –dry-run
 - For create file in a folder without spec file : nest generate service posts/providers/posts --flat –no-spec
+- For avoid circular dependency : use forwardRef
 ```
 
 ## Deployment
