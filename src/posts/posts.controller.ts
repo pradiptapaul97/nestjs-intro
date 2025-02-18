@@ -22,9 +22,6 @@ export class PostsController {
   }
 
   @Post()
-  @ApiBody({
-    //
-  })
   /**
    * createPost
    */
