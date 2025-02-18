@@ -19,17 +19,17 @@ async function bootstrap() {
   /**Swegger setup */
 
   const config = new DocumentBuilder()
-  .setTitle('Nestjs Blog Post Api')
-  .setDescription('Use the base API URL as http://localhost:3000')
-  .setTermsOfService('http://localhost:3000/terms-servise')
-  .setLicense('MIT License','http://localhost:3000')
-  .addServer('http://localhost:3000')
-  .setVersion('1.0')
-  .build();
+    .setTitle('Nestjs Blog Post Api')
+    .setDescription('Use the base API URL as http://localhost:3000')
+    .setTermsOfService('http://localhost:3000/terms-servise')
+    .setLicense('MIT License', 'http://localhost:3000')
+    .addServer('http://localhost:3000')
+    .setVersion('1.0')
+    .build();
 
   //Instabtiate Document
-  const document = SwaggerModule.createDocument(app,config);
-  SwaggerModule.setup('api',app,document)
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT ?? 3000);
 }

@@ -4,70 +4,70 @@ import { AuthService } from 'src/auth/providers/auth.service';
 
 @Injectable()
 export class UsersService {
-
   constructor(
-    @Inject(forwardRef(()=>AuthService))
-    private readonly authService: AuthService
-  ){
+    @Inject(forwardRef(() => AuthService))
+    private readonly authService: AuthService,
+  ) {
     //
   }
 
-    /**
-     * findAll
-     */
-    public findAll(
-        getUserParamDto: GetUsersParamDto,
-        limit: number,
-        page: number
-    ) {
+  /**
+   * findAll
+   */
+  public findAll(
+    getUserParamDto: GetUsersParamDto,
+    limit: number,
+    page: number,
+  ) {
+    const isAuth = this.authService.isAuth();
 
-        const isAuth = this.authService.isAuth();
+    console.log(isAuth, getUserParamDto, limit, page);
 
-        console.log(isAuth);
-        
-        return [
-            {
-              first_name: 'Pradipta',
-              last_name: 'Paul',
-              email: 'pradipta@yopmail.com',
-              password: 'Password@123',
-            },
-            {
-              first_name: 'John',
-              last_name: 'Doe',
-              email: 'john.doe@yopmail.com',
-              password: 'Password@123',
-            },
-            {
-              first_name: 'Jane',
-              last_name: 'Smith',
-              email: 'jane.smith@yopmail.com',
-              password: 'Password@123',
-            },
-            {
-              first_name: 'Alice',
-              last_name: 'Johnson',
-              email: 'alice.johnson@yopmail.com',
-              password: 'Password@123',
-            },
-            {
-              first_name: 'Bob',
-              last_name: 'Brown',
-              email: 'bob.brown@yopmail.com',
-              password: 'Password@123',
-            },
-        ];
-    }
+    return [
+      {
+        first_name: 'Pradipta',
+        last_name: 'Paul',
+        email: 'pradipta@yopmail.com',
+        password: 'Password@123',
+      },
+      {
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'john.doe@yopmail.com',
+        password: 'Password@123',
+      },
+      {
+        first_name: 'Jane',
+        last_name: 'Smith',
+        email: 'jane.smith@yopmail.com',
+        password: 'Password@123',
+      },
+      {
+        first_name: 'Alice',
+        last_name: 'Johnson',
+        email: 'alice.johnson@yopmail.com',
+        password: 'Password@123',
+      },
+      {
+        first_name: 'Bob',
+        last_name: 'Brown',
+        email: 'bob.brown@yopmail.com',
+        password: 'Password@123',
+      },
+    ];
+  }
 
-    /**
-     * findOneById
-     */
-    public findOneById(id: string) {
-        return {
-            first_name: 'John',
-            last_name: 'Doe',
-            email: 'john.doe@yopmail.com',
-            password: 'Password@123',
-        }
-    }
+  /**
+   * findOneById
+   */
+  public findOneById(id: string) {
+    console.log(id);
+
+    return {
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'john.doe@yopmail.com',
+      password: 'Password@123',
+    };
+  }
 }
