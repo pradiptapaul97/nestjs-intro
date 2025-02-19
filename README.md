@@ -43,6 +43,7 @@ $ npm run test:cov
 - For create file in a folder without spec file : nest generate service posts/providers/posts --flat –no-spec
 - For avoid circular dependency : use forwardRef
 - For inharit one dto to another dto as optional use PartialType
+- compodoc for document your code
 ```
 
 ## Deployment

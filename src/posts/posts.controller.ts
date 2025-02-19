@@ -4,6 +4,7 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { PatchPostsDto } from './dtos/patch-post.dto';
 
+/**Post controller */
 @Controller('posts')
 @ApiTags('Posts')
 export class PostsController {
