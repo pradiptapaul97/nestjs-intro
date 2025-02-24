@@ -52,7 +52,6 @@ export class CreatePostDto {
   postType: PostType;
 
   @ApiProperty({
-    enum: PostType,
     description:"This is the slug for blog post",
     example: "my-blog-post"
   })
