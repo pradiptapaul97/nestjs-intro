@@ -41,7 +41,8 @@ export class UsersController {
 
   @Post()
   public createUsers(@Body() createUserDto: CreateUserDto) {
-    return { status: 200, data: createUserDto, message: `User Added` };
+
+    return this.usersService.createUser(createUserDto);
   }
 
   /**GET SECTION */
