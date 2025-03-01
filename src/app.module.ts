@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
+import { Tag } from './tags/tag.entity';
+import { MetaOption } from './meta-options/meta-option.entity';
 
 @Module({
   imports: [UsersModule, PostsModule, AuthModule,
@@ -16,7 +18,8 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
       inject: [],
       useFactory: () => ({
         type: 'postgres',
-        entities: [User],
+        // entities: [User, Tag, MetaOption],
+        autoLoadEntities: true,//works when import entity into module
         synchronize: true,
         host: 'localhost',
         port: 5432,

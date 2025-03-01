@@ -52,7 +52,6 @@ export class Post {
 
     @Column({
         type: "text",
-        length: 96,
         nullable: true
     })
     schema?: string;
