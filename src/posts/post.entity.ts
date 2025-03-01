@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PostType } from "./enums/postType.enum";
 import { PostStatus } from "./enums/postStatus.enum";
 import { CreatePostMetaOptionDto } from "../meta-options/dtos/create-post-meta-option.dto";
@@ -70,8 +70,9 @@ export class Post {
     publishOn?: Date;
 
     @OneToMany(() => Tag, (tag) => tag.id)
-    tags?: Tag[];
+    tags?: Tag;
 
-    @OneToMany(() => MetaOption, (metaOption) => metaOption.id)
-    metaOptions?: CreatePostMetaOptionDto[];
+    @OneToOne(() => MetaOption)
+    @JoinColumn()
+    metaOptions?: MetaOption;
 }
