@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
+import { CreatePostDto } from '../dtos/create-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -7,6 +8,14 @@ export class PostsService {
     /**Injecting user servise */
     private readonly userService: UsersService,
   ) { }
+
+  /**
+   * Create Posts
+   */
+
+  public createPost(createPostDto: CreatePostDto) {
+
+  }
 
   /**
    * findAll

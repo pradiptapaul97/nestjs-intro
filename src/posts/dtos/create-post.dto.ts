@@ -10,12 +10,13 @@ import {
   IsJSON,
   IsUrl,
   IsISO8601,
+  MaxLength,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PostType } from '../enums/postType.enum';
 import { PostStatus } from '../enums/postStatus.enum';
 // import { PostMetaOptions } from '../enums/postMetaOptions.enum';
-import { CreatePostMetaOptionDto } from './create-post-meta-option.dto';
+import { CreatePostMetaOptionDto } from '../../meta-options/dtos/create-post-meta-option.dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 /**
@@ -40,6 +41,7 @@ export class CreatePostDto {
   })
   @IsString()
   @MinLength(4)
+  @MaxLength(512)
   @IsNotEmpty()
   title: string;
 
@@ -56,6 +58,7 @@ export class CreatePostDto {
     example: "my-blog-post"
   })
   @IsString()
+  @MaxLength(256)
   @IsNotEmpty()
   @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
     message: 'Slug can only contain lowercase letters, numbers, and hyphens',
@@ -91,6 +94,7 @@ export class CreatePostDto {
     example: "https://images.pexels.com/photos/2990603/pexels-photo-2990603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     description: "This is the featured image for blog post"
   })
+  @MaxLength(1024)
   @IsOptional()
   @IsUrl()
   featuredImageUrl?: string;
