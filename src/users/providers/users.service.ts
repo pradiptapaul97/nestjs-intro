@@ -22,13 +22,13 @@ export class UsersService {
 
     @InjectRepository(User)
     private UsersRepository: Repository<User>
-  ) {}
+  ) { }
 
   /**
    * Create User
    */
 
-  public async createUser(createUserDto: CreateUserDto){
+  public async createUser(createUserDto: CreateUserDto) {
     //check user exists
     const existingUser = await this.UsersRepository.findOne({
       where: {
@@ -36,12 +36,10 @@ export class UsersService {
       }
     });
 
-    if(existingUser)
-    {
+    if (existingUser) {
       return existingUser;
     }
-    else
-    {
+    else {
       let newUser = this.UsersRepository.create(createUserDto);
       newUser = await this.UsersRepository.save(newUser);
 

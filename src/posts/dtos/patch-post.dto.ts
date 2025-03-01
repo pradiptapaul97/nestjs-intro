@@ -7,7 +7,7 @@ export class PatchPostsDto extends PartialType(CreatePostDto) {
   //
 
   @ApiProperty({
-    description:"post id"
+    description: "post id"
   })
   @IsInt()
   @IsNotEmpty()

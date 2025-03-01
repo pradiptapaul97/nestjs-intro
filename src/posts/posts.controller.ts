@@ -12,7 +12,7 @@ export class PostsController {
     /**Injection post servise */
 
     private readonly postService: PostsService,
-  ) {}
+  ) { }
 
   /**
    * GET http://localhost:3000/posta/:userId
@@ -27,10 +27,10 @@ export class PostsController {
    * createPost
    */
   @ApiOperation({
-    summary:'Create a blog post'
+    summary: 'Create a blog post'
   })
   @ApiResponse({
-    status:201,
+    status: 201,
     description: "Post created success"
   })
   @Post()
@@ -43,10 +43,10 @@ export class PostsController {
    * updatePost
    */
   @ApiOperation({
-    summary:'Update a blog post'
+    summary: 'Update a blog post'
   })
   @ApiResponse({
-    status:200,
+    status: 200,
     description: "Post updated success"
   })
   @Patch()

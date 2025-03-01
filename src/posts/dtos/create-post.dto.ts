@@ -35,8 +35,8 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePostDto {
   @ApiProperty({
-    example:"This is a title",
-    description:"This is the title for blog post"
+    example: "This is a title",
+    description: "This is the title for blog post"
   })
   @IsString()
   @MinLength(4)
@@ -45,14 +45,14 @@ export class CreatePostDto {
 
   @ApiProperty({
     enum: PostType,
-    description:"This is the post type for blog post.Possible values post, page, story, series"
+    description: "This is the post type for blog post.Possible values post, page, story, series"
   })
   @IsEnum(PostType)
   @IsNotEmpty()
   postType: PostType;
 
   @ApiProperty({
-    description:"This is the slug for blog post",
+    description: "This is the slug for blog post",
     example: "my-blog-post"
   })
   @IsString()
@@ -64,7 +64,7 @@ export class CreatePostDto {
 
   @ApiProperty({
     enum: PostStatus,
-    description:"This is the status for blog post.Possible values draft, scheduled, review, published",
+    description: "This is the status for blog post.Possible values draft, scheduled, review, published",
     example: "my-blog-post"
   })
   @IsEnum(PostStatus)
@@ -72,24 +72,24 @@ export class CreatePostDto {
   status: PostStatus;
 
   @ApiPropertyOptional({
-    example:"This is a content",
-    description:"This is the content for blog post"
+    example: "This is a content",
+    description: "This is the content for blog post"
   })
   @IsOptional()
   @IsString()
   content?: string;
 
   @ApiPropertyOptional({
-    example:"{\"key\": \"value\"}",
-    description:"Serialize your JSON object."
+    example: "{\"key\": \"value\"}",
+    description: "Serialize your JSON object."
   })
   @IsOptional()
   @IsJSON()
   schema?: string;
 
   @ApiPropertyOptional({
-    example:"https://images.pexels.com/photos/2990603/pexels-photo-2990603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    description:"This is the featured image for blog post"
+    example: "https://images.pexels.com/photos/2990603/pexels-photo-2990603.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    description: "This is the featured image for blog post"
   })
   @IsOptional()
   @IsUrl()
@@ -97,8 +97,8 @@ export class CreatePostDto {
 
   //@IsDate()
   @ApiPropertyOptional({
-    example:"2025-02-17T12:00:00Z",
-    description:"This is the date for blog post"
+    example: "2025-02-17T12:00:00Z",
+    description: "This is the date for blog post"
   })
   @IsISO8601()
   @IsOptional()
@@ -106,8 +106,8 @@ export class CreatePostDto {
   publishOn?: Date;
 
   @ApiPropertyOptional({
-    example:['first','second'],
-    description:"This is the tag for blog post which is array of string"
+    example: ['first', 'second'],
+    description: "This is the tag for blog post which is array of string"
   })
   @IsOptional()
   @IsArray()
@@ -120,17 +120,17 @@ export class CreatePostDto {
     type: 'array',
     required: false,
     items: {
-      type:'object',
-      properties:{
-        key:{
+      type: 'object',
+      properties: {
+        key: {
           type: 'string',
           description: "The key can be any string",
-          example:'SidebarEnable'
+          example: 'SidebarEnable'
         },
-        value:{
+        value: {
           type: 'any',
           description: "The value can be any",
-          example:true
+          example: true
         }
       }
     }

@@ -6,7 +6,7 @@ export class PostsService {
   constructor(
     /**Injecting user servise */
     private readonly userService: UsersService,
-  ) {}
+  ) { }
 
   /**
    * findAll

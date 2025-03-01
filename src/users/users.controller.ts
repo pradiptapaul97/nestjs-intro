@@ -21,7 +21,7 @@ export class UsersController {
   constructor(
     //Injecting servise
     private readonly usersService: UsersService,
-  ) {}
+  ) { }
 
   /**PATCH SECTION */
   @Patch()
