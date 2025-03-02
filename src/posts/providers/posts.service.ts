@@ -43,7 +43,7 @@ export class PostsService {
   public async findAll(userId: number) {
     //find user
 
-    const user = this.userService.findOneById(userId);
+    // const user = this.userService.findOneById(userId);
 
     //for entity eager false
     // let post = await this.postRepository.find({
