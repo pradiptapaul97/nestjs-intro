@@ -1,19 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
 import { CreatePostDto } from '../dtos/create-post.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MetaOption } from 'src/meta-options/meta-option.entity';
+import { Repository } from 'typeorm';
+import { Post } from '../post.entity';
 
 @Injectable()
 export class PostsService {
   constructor(
     /**Injecting user servise */
     private readonly userService: UsersService,
+
+    /**Injecting post repository */
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>, // ✅ Correct injection
+
+    /**Injecting meta option repository */
+    @InjectRepository(MetaOption)
+    private readonly metaOptionRepository: Repository<MetaOption> // ✅ Correct injection
   ) { }
 
   /**
    * Create Posts
    */
 
-  public createPost(createPostDto: CreatePostDto) {
+  public async createPost(createPostDto: CreatePostDto) {
+    //create meta options
+
+    let metaOptions = (createPostDto.metaOptions) ? this.metaOptionRepository.create(createPostDto.metaOptions) : null
+
+    if (metaOptions) {
+      await this.metaOptionRepository.save(metaOptions)
+    }
+    //create post
+    let post = this.postRepository.create(createPostDto); // ✅ Works fine
+
+    //add metaoptions in  post
+    if (metaOptions) {
+      post.metaOptions = metaOptions;
+    }
+    return await this.postRepository.save(post); // ✅ Works fine
 
   }
 

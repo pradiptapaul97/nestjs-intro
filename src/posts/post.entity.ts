@@ -69,8 +69,8 @@ export class Post {
     })
     publishOn?: Date;
 
-    @OneToMany(() => Tag, (tag) => tag.id)
-    tags?: Tag;
+    // @OneToMany(() => Tag, (tag) => tag.id)
+    // tags?: Tag;
 
     @OneToOne(() => MetaOption)
     @JoinColumn()

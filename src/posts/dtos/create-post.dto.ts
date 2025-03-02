@@ -121,27 +121,17 @@ export class CreatePostDto {
 
   //optional but when given the key value ar proper formated
   @ApiPropertyOptional({
-    type: 'array',
-    required: false,
-    items: {
-      type: 'object',
-      properties: {
-        key: {
-          type: 'string',
-          description: "The key can be any string",
-          example: 'SidebarEnable'
-        },
-        value: {
-          type: 'any',
-          description: "The value can be any",
-          example: true
-        }
+    type: 'object',
+    properties: {
+      metaValue: {
+        type: 'json',
+        description: "The metaValue is a JSON string",
+        example: "{\"sidebarEnable\": true, \"footerActive\": true}"
       }
     }
   })
   @IsOptional()
-  @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreatePostMetaOptionDto)
-  metaOptions?: CreatePostMetaOptionDto[];
+  metaOptions?: CreatePostMetaOptionDto | null;
 }
