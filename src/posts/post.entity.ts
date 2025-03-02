@@ -1,9 +1,10 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PostType } from "./enums/postType.enum";
 import { PostStatus } from "./enums/postStatus.enum";
 import { CreatePostMetaOptionDto } from "../meta-options/dtos/create-post-meta-option.dto";
 import { Tag } from "src/tags/tag.entity";
 import { MetaOption } from "src/meta-options/meta-option.entity";
+import { User } from "src/users/user.entity";
 
 
 @Entity()
@@ -79,4 +80,7 @@ export class Post {
     })
     // @JoinColumn()
     metaOptions?: MetaOption;
+
+    @ManyToOne(() => User, (user) => user.posts)
+    author: User;
 }
