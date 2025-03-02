@@ -26,8 +26,12 @@ export class PostsService {
    */
 
   public async createPost(createPostDto: CreatePostDto) {
+
+    //find author based on author id
+
+    let author = await this.userService.findOneById(createPostDto.authorId)
     //create post
-    let post = this.postRepository.create(createPostDto); // ✅ Works fine
+    let post = this.postRepository.create({ ...createPostDto, author: author }); // ✅ Works fine
 
     return await this.postRepository.save(post); // ✅ Works fine
 
@@ -36,7 +40,7 @@ export class PostsService {
   /**
    * findAll
    */
-  public async findAll(userId: string) {
+  public async findAll(userId: number) {
     //find user
 
     const user = this.userService.findOneById(userId);

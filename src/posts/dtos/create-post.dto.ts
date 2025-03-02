@@ -11,6 +11,7 @@ import {
   IsUrl,
   IsISO8601,
   MaxLength,
+  IsInt,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PostType } from '../enums/postType.enum';
@@ -134,4 +135,13 @@ export class CreatePostDto {
   @ValidateNested({ each: true })
   @Type(() => CreatePostMetaOptionDto)
   metaOptions?: CreatePostMetaOptionDto | null;
+
+  @ApiProperty({
+    type: 'integer',
+    required: true,
+    example: 1
+  })
+  @IsNotEmpty()
+  @IsInt()
+  authorId: number;
 }
