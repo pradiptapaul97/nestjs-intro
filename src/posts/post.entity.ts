@@ -72,7 +72,10 @@ export class Post {
     // @OneToMany(() => Tag, (tag) => tag.id)
     // tags?: Tag;
 
-    @OneToOne(() => MetaOption)
+    @OneToOne(() => MetaOption, {
+        // cascade: ["insert" , "update" , "remove" , "soft-remove" , "recover"]
+        cascade: true
+    })
     @JoinColumn()
     metaOptions?: MetaOption;
 }
