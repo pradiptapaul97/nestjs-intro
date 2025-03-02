@@ -70,11 +70,12 @@ export class Post {
     publishOn?: Date;
 
     // @OneToMany(() => Tag, (tag) => tag.id)
-    // tags?: Tag;
+    // tags?: Tag;                                     
 
     @OneToOne(() => MetaOption, {
         // cascade: ["insert" , "update" , "remove" , "soft-remove" , "recover"]
-        cascade: true
+        cascade: true, //use for autometically add meta option data to meta option entity table
+        eager: true,//use for get mata option data with post data
     })
     @JoinColumn()
     metaOptions?: MetaOption;
