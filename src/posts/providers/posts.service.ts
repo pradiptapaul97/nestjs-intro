@@ -3,9 +3,10 @@ import { UsersService } from 'src/users/providers/users.service';
 import { CreatePostDto } from '../dtos/create-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetaOption } from 'src/meta-options/meta-option.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Post } from '../post.entity';
 import { TagsService } from 'src/tags/providers/tags.service';
+import { PatchPostsDto } from '../dtos/patch-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -69,6 +70,33 @@ export class PostsService {
     })
 
     return post;
+  }
+
+  /**Update post */
+  public async updatePost(patchPostDto: PatchPostsDto) {
+
+    let tags = await this.tagService.findMultipleTags(patchPostDto.tags);
+
+    let post = await this.postRepository.findOneBy({
+      id: patchPostDto.id
+    })
+
+    post.title = patchPostDto.title ?? post.title;//nullish coalescing operator
+    post.content = patchPostDto.content ?? post.content;
+    post.status = patchPostDto.status ?? post.status;
+    post.postType = patchPostDto.postType ?? post.postType;
+    post.slug = patchPostDto.slug ?? post.slug;
+    post.schema = patchPostDto.schema ?? post.schema;
+    post.featuredImageUrl = patchPostDto.featuredImageUrl ?? post.featuredImageUrl;
+    post.publishOn = patchPostDto.publishOn ?? post.publishOn;
+
+    // post.metaOptions = patchPostDto.metaOptions ?? post.metaOptions;
+    // post.author = patchPostDto.author ?? post.author;
+    post.tags = tags;
+
+    let postupdateData = await this.postRepository.save(post)
+
+    return postupdateData;
   }
 
   /**Delete Post */
