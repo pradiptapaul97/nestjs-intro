@@ -39,6 +39,8 @@ export class PostsService {
     //create post
     let post = this.postRepository.create({ ...createPostDto, author: author, tags: tags }); // ✅ Works fine
 
+    console.log({ ...createPostDto, author: author, tags: tags });
+
     return await this.postRepository.save(post); // ✅ Works fine
 
   }
