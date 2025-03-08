@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PostType } from "./enums/postType.enum";
 import { PostStatus } from "./enums/postStatus.enum";
 import { CreatePostMetaOptionDto } from "../meta-options/dtos/create-post-meta-option.dto";
@@ -70,9 +70,6 @@ export class Post {
     })
     publishOn?: Date;
 
-    // @OneToMany(() => Tag, (tag) => tag.id)
-    // tags?: Tag;                                     
-
     @OneToOne(() => MetaOption, (metaOptions) => metaOptions.post, {
         // cascade: ["insert" , "update" , "remove" , "soft-remove" , "recover"]
         cascade: true, //use for autometically add meta option data to meta option entity table
@@ -85,4 +82,7 @@ export class Post {
         eager: true
     })
     author: User;
+
+    @ManyToMany(() => Tag, (tag) => tag.id)
+    tags?: Tag[];
 }

@@ -111,14 +111,13 @@ export class CreatePostDto {
   publishOn?: Date;
 
   @ApiPropertyOptional({
-    example: ['first', 'second'],
-    description: "This is the tag for blog post which is array of string"
+    example: [1, 2],
+    description: "Array of ids of tag"
   })
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  @MinLength(3, { each: true })
-  tags?: string[];
+  @IsInt({ each: true })
+  tags?: number[];
 
   //optional but when given the key value ar proper formated
   @ApiPropertyOptional({
