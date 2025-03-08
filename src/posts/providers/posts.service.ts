@@ -61,7 +61,12 @@ export class PostsService {
     // })
 
     //for entity eager true
-    let post = await this.postRepository.find({})
+    let post = await this.postRepository.find({
+      // relations: {
+      //   metaOptions: true,
+      //   tags: true
+      // }
+    })
 
     return post;
   }
