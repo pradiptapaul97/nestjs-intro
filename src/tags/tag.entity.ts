@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Post } from "src/posts/post.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 @Entity()
@@ -41,6 +42,11 @@ export class Tag {
         nullable: true
     })
     featuredImageUrl?: string;
+
+    @ManyToMany(() => Post, (post) => post.tags, {
+        onDelete: 'CASCADE'//for avoid and delete tag with post from post tag tag table because of post is the owning site og manytomany relation
+    })
+    posts?: Post[];
 
     @CreateDateColumn()
     createDate: Date;

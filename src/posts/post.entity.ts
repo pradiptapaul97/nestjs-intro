@@ -83,7 +83,7 @@ export class Post {
     })
     author: User;
 
-    @ManyToMany(() => Tag, {
+    @ManyToMany(() => Tag, (tag) => tag.posts, {
         eager: true
     })
     @JoinTable()
