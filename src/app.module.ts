@@ -10,9 +10,16 @@ import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
 import { Tag } from './tags/tag.entity';
 import { MetaOption } from './meta-options/meta-option.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, PostsModule, AuthModule,
+  imports: [
+    UsersModule,
+    PostsModule,
+    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRootAsync({
       imports: [],
       inject: [],

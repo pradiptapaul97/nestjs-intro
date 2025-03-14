@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { User } from '../user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
+import { ConfigService } from '@nestjs/config';
 
 /**
  * Class to connect to user table and perform buisness operations
@@ -21,7 +22,10 @@ export class UsersService {
      */
 
     @InjectRepository(User)
-    private UsersRepository: Repository<User>
+    private UsersRepository: Repository<User>,
+
+    /**INJECTION CONFIG SERVISE */
+    private readonly configService: ConfigService,
   ) { }
 
   /**
@@ -62,6 +66,13 @@ export class UsersService {
     const isAuth = this.authService.isAuth();
 
     console.log(isAuth, getUserParamDto, limit, page);
+
+    // const environment = this.configService.get('S3_BUCKET');
+
+    const environment = this.configService.get<string>('S3_BUCKET'); // typecast the final value we are expecting
+
+    console.log({ environment });
+
 
     return [
       {
