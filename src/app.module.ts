@@ -13,6 +13,7 @@ import { MetaOption } from './meta-options/meta-option.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
+import environmentValidation from './config/environment.validation';
 
 const ENV = process.env.NODE_ENV;
 
@@ -25,7 +26,8 @@ const ENV = process.env.NODE_ENV;
       isGlobal: true,
       // envFilePath: ['.env.development']
       envFilePath: !ENV ? '.env' : `.env.${ENV}`,
-      load: [appConfig, databaseConfig]
+      load: [appConfig, databaseConfig],
+      validationSchema: environmentValidation
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -36,7 +38,7 @@ const ENV = process.env.NODE_ENV;
         autoLoadEntities: configService.get('database.autoLoadEntities'),//works when import entity into module
         synchronize: configService.get('database.synchronize'),
         host: configService.get('database.host'),
-        port: configService.get('database.port'),
+        port: +configService.get('database.port'),
         username: configService.get('database.user'),
         password: configService.get('database.password'),
         database: configService.get('database.name'),
