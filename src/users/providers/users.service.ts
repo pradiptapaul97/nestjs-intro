@@ -1,4 +1,4 @@
-import { BadRequestException, forwardRef, Inject, Injectable, RequestTimeoutException } from '@nestjs/common';
+import { BadRequestException, forwardRef, HttpException, HttpStatus, Inject, Injectable, RequestTimeoutException } from '@nestjs/common';
 import { GetUsersParamDto } from '../dtos/get-users-param.dto';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { Repository } from 'typeorm';
@@ -85,19 +85,18 @@ export class UsersService {
     limit: number,
     page: number,
   ) {
-    const isAuth = this.authService.isAuth();
 
-    console.log(isAuth, getUserParamDto, limit, page);
-
-    // const environment = this.configService.get('S3_BUCKET');
-
-    // const environment = this.configService.get<string>('S3_BUCKET'); // typecast the final value we are expecting
-
-    //test new config
-
-    console.log(this.profileConfiguration);
-    console.log(this.profileConfiguration.apikey);
-
+    throw new HttpException({
+      status: HttpStatus.MOVED_PERMANENTLY,
+      error: 'The api endpoint does not exists',
+      fileName: 'users.service.ts',
+      lineNumber: 88
+    },
+      HttpStatus.MOVED_PERMANENTLY,
+      {
+        cause: new Error(),
+        description: 'Occurred because the api endpoint is permanently moved'
+      })
 
 
     return [
