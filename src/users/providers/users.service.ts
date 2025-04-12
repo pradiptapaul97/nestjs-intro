@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable, RequestTimeoutException } from '@nestjs/common';
 import { GetUsersParamDto } from '../dtos/get-users-param.dto';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { Repository } from 'typeorm';
@@ -40,21 +40,37 @@ export class UsersService {
 
   public async createUser(createUserDto: CreateUserDto) {
     //check user exists
-    const existingUser = await this.UsersRepository.findOne({
-      where: {
-        email: createUserDto.email
-      }
-    });
+
+    let existingUser = undefined;
+
+    try {
+      existingUser = await this.UsersRepository.findOne({
+        where: {
+          email: createUserDto.email
+        }
+      });
+    } catch (error) {
+      throw new RequestTimeoutException('Unable to process your request at the moment please try again later', {
+        description: "Error connecting to the database"
+      })
+    }
+
 
     if (existingUser) {
-      return existingUser;
+      throw new BadRequestException('The user is already exists. Please check your email.')
     }
-    else {
-      let newUser = this.UsersRepository.create(createUserDto);
-      newUser = await this.UsersRepository.save(newUser);
 
-      return newUser;
+    let newUser = this.UsersRepository.create(createUserDto);
+
+    try {
+      newUser = await this.UsersRepository.save(newUser);
+    } catch (error) {
+      throw new RequestTimeoutException('Unable to process your request at the moment please try again later', {
+        description: "Error connecting to the database"
+      })
     }
+
+    return newUser;
 
     //User exists handle exception
 
@@ -122,8 +138,21 @@ export class UsersService {
    * findOneById user
    */
   public async findOneById(id: number) {
-    console.log(id);
+    let userdata = undefined;
 
-    return await this.UsersRepository.findOneBy({ id })
+    try {
+      userdata = await this.UsersRepository.findOneBy({ id })
+    } catch (error) {
+      throw new RequestTimeoutException('Unable to process your request at the moment please try again later', {
+        description: "Error connecting to the database"
+      })
+    }
+
+    if (!userdata) {
+      throw new BadRequestException('The user id is not exists.')
+    }
+
+    return userdata;
+
   }
 }
