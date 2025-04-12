@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, RequestTimeoutException } from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
 import { CreatePostDto } from '../dtos/create-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -75,11 +75,27 @@ export class PostsService {
   /**Update post */
   public async updatePost(patchPostDto: PatchPostsDto) {
 
-    let tags = await this.tagService.findMultipleTags(patchPostDto.tags);
+    let tags = undefined;
+    let post = undefined;
 
-    let post = await this.postRepository.findOneBy({
-      id: patchPostDto.id
-    })
+    try {
+      tags = await this.tagService.findMultipleTags(patchPostDto.tags);
+      post = await this.postRepository.findOneBy({
+        id: patchPostDto.id
+      });
+    } catch (error) {
+      throw new RequestTimeoutException('Unable to process your request at the moment please try again later', {
+        description: "Error connecting to the database"
+      })
+    }
+
+    if (!tags || tags.length !== patchPostDto.tags.length) {
+      throw new BadRequestException('Tag ids is incorrect.')
+    }
+
+    if (!post) {
+      throw new BadRequestException('Post id does not exists.')
+    }
 
     post.title = patchPostDto.title ?? post.title;//nullish coalescing operator
     post.content = patchPostDto.content ?? post.content;
@@ -94,7 +110,15 @@ export class PostsService {
     // post.author = patchPostDto.author ?? post.author;
     post.tags = tags;
 
-    let postupdateData = await this.postRepository.save(post)
+    let postupdateData = undefined;
+
+    try {
+      postupdateData = await this.postRepository.save(post);
+    } catch (error) {
+      throw new RequestTimeoutException('Unable to process your request at the moment please try again later', {
+        description: "Error connecting to the database"
+      })
+    }
 
     return postupdateData;
   }
