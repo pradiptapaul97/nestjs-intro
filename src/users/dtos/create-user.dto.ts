@@ -1,4 +1,7 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
+  IsArray,
   IsEmail,
   IsNotEmpty,
   IsOptional,
@@ -6,6 +9,7 @@ import {
   Matches,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -35,4 +39,20 @@ export class CreateUserDto {
       'Password Minimum eight characters, at least one letter, one number and one special character',
   })
   password: string;
+}
+
+export class CreateManyUserDto {
+
+  @ApiProperty({
+    type: 'array',
+    required: true,
+    items: {
+      type: 'User'
+    }
+  })
+  @IsNotEmpty()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateUserDto)
+  users: CreateUserDto[];
 }

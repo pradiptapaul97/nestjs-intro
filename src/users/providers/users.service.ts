@@ -4,16 +4,17 @@ import { AuthService } from 'src/auth/providers/auth.service';
 import { Repository } from 'typeorm';
 import { User } from '../user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto } from '../dtos/create-user.dto';
+import { CreateManyUserDto, CreateUserDto } from '../dtos/create-user.dto';
 import { ConfigService, ConfigType } from '@nestjs/config';
 import profileConfig from '../config/profile.config';
+import { UsersCreateManyProvider } from './users-create-many.provider';
 
 /**
  * Class to connect to user table and perform buisness operations
  */
 @Injectable()
 export class UsersService {
-  /**User service construstor */
+  /**User service constructor */
   constructor(
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
@@ -31,7 +32,12 @@ export class UsersService {
     //module specific config
 
     @Inject(profileConfig.KEY)
-    private readonly profileConfiguration: ConfigType<typeof profileConfig>
+    private readonly profileConfiguration: ConfigType<typeof profileConfig>,
+
+    /**
+     * INJECT usersCreatemanyProvider
+     */
+    private readonly usersCreateManyProvider: UsersCreateManyProvider
   ) { }
 
   /**
@@ -97,40 +103,6 @@ export class UsersService {
         cause: new Error(),
         description: 'Occurred because the api endpoint is permanently moved'
       })
-
-
-    return [
-      {
-        first_name: 'Pradipta',
-        last_name: 'Paul',
-        email: 'pradipta@yopmail.com',
-        password: 'Password@123',
-      },
-      {
-        first_name: 'John',
-        last_name: 'Doe',
-        email: 'john.doe@yopmail.com',
-        password: 'Password@123',
-      },
-      {
-        first_name: 'Jane',
-        last_name: 'Smith',
-        email: 'jane.smith@yopmail.com',
-        password: 'Password@123',
-      },
-      {
-        first_name: 'Alice',
-        last_name: 'Johnson',
-        email: 'alice.johnson@yopmail.com',
-        password: 'Password@123',
-      },
-      {
-        first_name: 'Bob',
-        last_name: 'Brown',
-        email: 'bob.brown@yopmail.com',
-        password: 'Password@123',
-      },
-    ];
   }
 
   /**
@@ -154,4 +126,9 @@ export class UsersService {
     return userdata;
 
   }
+
+  public async createManyUser(createManyUserDto: CreateManyUserDto) {
+    return await this.usersCreateManyProvider.createManyUser(createManyUserDto)
+  }
+
 }

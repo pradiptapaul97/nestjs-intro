@@ -9,7 +9,7 @@ import {
   ParseIntPipe,
   DefaultValuePipe,
 } from '@nestjs/common';
-import { CreateUserDto } from './dtos/create-user.dto';
+import { CreateManyUserDto, CreateUserDto } from './dtos/create-user.dto';
 import { GetUsersParamDto } from './dtos/get-users-param.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './providers/users.service';
@@ -43,6 +43,12 @@ export class UsersController {
   public createUsers(@Body() createUserDto: CreateUserDto) {
 
     return this.usersService.createUser(createUserDto);
+  }
+
+  @Post('create-many')
+  public createManyUsers(@Body() createUsersDto: CreateManyUserDto) {
+
+    return this.usersService.createManyUser(createUsersDto);
   }
 
   /**GET SECTION */
